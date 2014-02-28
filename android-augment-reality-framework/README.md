@@ -6,6 +6,7 @@ Augmented Reality Otter Vision used for new students/faculty to have an interact
 All Code is within: src/com/jwetherell/augmented_reality/
 
 *Visual Branch is used for visual upgrades/testing that doesn't effect the functionality
+
 *Functionality Branch is used for upgrades/testing that will effect the applications functionality.
 
 Version Updates
