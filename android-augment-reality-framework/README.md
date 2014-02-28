@@ -3,6 +3,8 @@ AROV
 
 Augmented Reality Otter Vision used for new students/faculty to have an interactive way of finding their way around campus.
 
+All Code is within src/com/jwetherell/augmented_reality/
+
 Version Updates
 =================================
 
