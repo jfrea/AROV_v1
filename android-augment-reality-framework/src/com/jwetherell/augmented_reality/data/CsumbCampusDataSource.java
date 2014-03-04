@@ -26,13 +26,9 @@ import com.jwetherell.augmented_reality.ui.Marker;
 
 public class CsumbCampusDataSource extends NetworkDataSource{
 	
-	private static final String URL = "http://hosting.otterlabs.org/classes/freajoshuap/capstone/csumb.json";
+	private static final String URL = "http://hosting.otterlabs.org/classes/melanomoises/arov/php/csumb.json";
 
 	private static Bitmap icon = null;
-	private static Double lat = null;
-	private static Double lon = null;
-	private static String building = null;
-	private static String user = null;
 
 
 	@Override
@@ -103,7 +99,7 @@ public class CsumbCampusDataSource extends NetworkDataSource{
 
 		Marker ma = null;
 		try {
-			//Double lat = null, lon = null;
+			Double lat = null, lon = null;
 
 			if (!jo.isNull("geometry")) {
 				JSONObject geo = jo.getJSONObject("geometry");
@@ -112,8 +108,7 @@ public class CsumbCampusDataSource extends NetworkDataSource{
 				lon = Double.parseDouble(coordinates.getString("lng"));
 			}
 			if (lat != null) {
-				String user = jo.getString("name");
-			    building = jo.getString("building");
+				String user = jo.getString("name");	
 				
 			//Create customized icon dynamically from url
 			try {
@@ -123,7 +118,7 @@ public class CsumbCampusDataSource extends NetworkDataSource{
 			catch (Exception e) {
 				e.printStackTrace();}
 
-			ma = new IconMarker(user, lat, lon, 0, Color.RED, icon, building);
+			ma = new IconMarker(user + ": " + jo.getString("name"), lat, lon, 0, Color.RED, icon);
 			
 			}
 		} catch (Exception e) {
@@ -131,6 +126,4 @@ public class CsumbCampusDataSource extends NetworkDataSource{
 		}
 		return ma;
 	}
-	
 }
-

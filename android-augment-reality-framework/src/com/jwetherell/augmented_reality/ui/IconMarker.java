@@ -9,20 +9,15 @@ import android.graphics.Canvas;
  * visual representation.
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
- * 
- * 
  */
 public class IconMarker extends Marker {
 
     private Bitmap bitmap = null;
-    
-    //added building to grab the information from the JSON file.
-    public IconMarker(String name, double latitude, double longitude, double altitude, int color, Bitmap bitmap, String building) {
-        super(name, latitude, longitude, altitude, color,building);
+
+    public IconMarker(String name, double latitude, double longitude, double altitude, int color, Bitmap bitmap) {
+        super(name, latitude, longitude, altitude, color);
         this.bitmap = bitmap;
-        
     }
-    
 
     /**
      * {@inheritDoc}

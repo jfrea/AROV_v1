@@ -125,7 +125,7 @@ public class TwitterDataSource extends NetworkDataSource {
             if (lat != null) {
                 String user = jo.getString("from_user");
 
-                ma = new IconMarker(user + ": " + jo.getString("text"), lat, lon, 0, Color.RED, icon,"test");
+                ma = new IconMarker(user + ": " + jo.getString("text"), lat, lon, 0, Color.RED, icon);
             }
         } catch (Exception e) {
             e.printStackTrace();

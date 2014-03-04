@@ -60,7 +60,6 @@ public class Marker implements Comparable<Marker> {
 
     // Unique identifier of Marker
     private String name = null;
-    private String building = null;
     // Marker's physical location (Lat, Lon, Alt)
     private final PhysicalLocation physicalLocation = new PhysicalLocation();
     // Distance from camera to PhysicalLocation in meters
@@ -81,10 +80,9 @@ public class Marker implements Comparable<Marker> {
     private PaintablePoint positionPoint = null;
     private PaintablePosition positionContainer = null;
 
-    public Marker(String name, double latitude, double longitude, double altitude, int color, String building) {
-        set(name, latitude, longitude, altitude, color, building);
+    public Marker(String name, double latitude, double longitude, double altitude, int color) {
+        set(name, latitude, longitude, altitude, color);
     }
-    
 
     /**
      * Set the objects parameters. This should be used instead of creating new
@@ -100,16 +98,12 @@ public class Marker implements Comparable<Marker> {
      *            Altitude of the Marker in meters (>0 is above sea level).
      * @param color
      *            Color of the Marker.
-     * @param building
-     * 			  Name of the building *****New Feature******
-     * 					-This is used for getting information from the JSON file and change it in every datasource to have the parameters agree.	
      */
-    public void set(String name, double latitude, double longitude, double altitude, int color, String building) {
+    public void set(String name, double latitude, double longitude, double altitude, int color) {
         if (name == null)
             throw new NullPointerException();
 
         this.name = name;
-        this.building=building;
         this.physicalLocation.set(latitude, longitude, altitude);
         this.color = color;
         this.isOnRadar = false;
@@ -129,14 +123,6 @@ public class Marker implements Comparable<Marker> {
      */
     public String getName() {
         return this.name;
-    }
-    
-    public String getBuilding(){
-    	return this.building;
-    }
-    
-    public PhysicalLocation getMarkerLocation() {
-        return this.physicalLocation;
     }
 
     /**

@@ -79,7 +79,7 @@ public class BuzzDataSource extends NetworkDataSource {
         if (jo.has("title") && jo.has("geocode")) {
             try {
                 ma = new IconMarker(jo.getString("title"), Double.valueOf(jo.getString("geocode").split(" ")[0]), Double.valueOf(jo.getString("geocode").split(
-                        " ")[1]), 0, Color.GREEN, icon, "test");
+                        " ")[1]), 0, Color.GREEN, icon);
             } catch (Exception e) {
                 e.printStackTrace();
             }

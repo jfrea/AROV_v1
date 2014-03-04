@@ -10,9 +10,11 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -21,7 +23,6 @@ import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.widget.PopupWindow;
 
 import com.jwetherell.augmented_reality.R;
 import com.jwetherell.augmented_reality.data.ARData;
@@ -32,6 +33,7 @@ import com.jwetherell.augmented_reality.data.NetworkDataSource;
 import com.jwetherell.augmented_reality.data.WikipediaDataSource;
 import com.jwetherell.augmented_reality.ui.Marker;
 import com.jwetherell.augmented_reality.widget.VerticalTextView;
+
 
 /**
  * This class extends the AugmentedReality and is designed to be an example on
@@ -49,7 +51,8 @@ public class Demo extends AugmentedReality {
 
     private static Toast myToast = null;
     private static VerticalTextView text = null;
-    private static PopupWindow getInfo = null;
+    
+    protected Dialog mSplashDialog;
 
     /**
      * {@inheritDoc}
@@ -57,6 +60,16 @@ public class Demo extends AugmentedReality {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        MyStateSaver data = (MyStateSaver) getLastNonConfigurationInstance();
+        if(data != null) {
+        	if(data.showSplashScreen) {
+        		showSplashScreen();
+        	}
+        }
+        else {
+        	showSplashScreen();
+        }
 
         // Create toast
         myToast = new Toast(getApplicationContext());
@@ -68,17 +81,70 @@ public class Demo extends AugmentedReality {
         text.setBackgroundResource(android.R.drawable.toast_frame);
         text.setTextAppearance(getApplicationContext(), android.R.style.TextAppearance_Small);
         text.setShadowLayer(2.75f, 0f, 0f, Color.parseColor("#BB000000"));
-        
         myToast.setView(text);
         // Setting duration and displaying the toast
         myToast.setDuration(Toast.LENGTH_SHORT);
 
         // Local
-        //LocalDataSource localData = new LocalDataSource(this.getResources());
-        //ARData.addMarkers(localData.getMarkers());
+        LocalDataSource localData = new LocalDataSource(this.getResources());
+        ARData.addMarkers(localData.getMarkers());
 
+        NetworkDataSource wikipedia = new WikipediaDataSource(this.getResources());
+        sources.put("wiki", wikipedia);
+        //NetworkDataSource googlePlaces = new GooglePlacesDataSource(this.getResources());
+        //sources.put("googlePlaces", googlePlaces);
         NetworkDataSource csumbCampus = new CsumbCampusDataSource();
         sources.put("csumbCampus", csumbCampus);
+    }
+    
+    //Splash Screen Data
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        MyStateSaver data = new MyStateSaver();
+        // Save your important data here
+     
+        if (mSplashDialog != null) {
+            data.showSplashScreen = true;
+            removeSplashScreen();
+        }
+        return data;
+    }
+     
+    /**
+     * Removes the Dialog that displays the splash screen
+     */
+    protected void removeSplashScreen() {
+        if (mSplashDialog != null) {
+            mSplashDialog.dismiss();
+            mSplashDialog = null;
+        }
+    }
+     
+    /**
+     * Shows the splash screen over the full Activity
+     */
+    protected void showSplashScreen() {
+        mSplashDialog = new Dialog(this, R.style.SplashScreen);
+        mSplashDialog.setContentView(R.layout.splash);
+        mSplashDialog.setCancelable(false);
+        mSplashDialog.show();
+         
+        // Set Runnable to remove splash screen just in case
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            removeSplashScreen();
+          }
+        }, 3000);
+    }
+     
+    /**
+     * Simple class for storing important data across config changes
+     */
+    private class MyStateSaver {
+        public boolean showSplashScreen = false;
+        // Your other important fields here
     }
 
     /**
@@ -140,8 +206,7 @@ public class Demo extends AugmentedReality {
      */
     @Override
     protected void markerTouched(Marker marker) {
-    	
-        text.setText(marker.getBuilding());
+        text.setText(marker.getName());
         myToast.show();
     }
 
@@ -190,5 +255,5 @@ public class Demo extends AugmentedReality {
 
         ARData.addMarkers(markers);
         return true;
-    }
+    }    
 }

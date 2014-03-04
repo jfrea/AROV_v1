@@ -19,8 +19,6 @@ import com.jwetherell.augmented_reality.ui.Marker;
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
-
-//the last paramter in the marker making is just a place holder
 public class LocalDataSource extends DataSource {
 
     private List<Marker> cachedMarkers = new ArrayList<Marker>();
@@ -39,10 +37,10 @@ public class LocalDataSource extends DataSource {
     }
 
     public List<Marker> getMarkers() {
-        Marker atl = new IconMarker("ATL ICON", 39.931268, -75.051262, 0, Color.DKGRAY, icon, "test");
+        Marker atl = new IconMarker("ATL ICON", 39.931268, -75.051262, 0, Color.DKGRAY, icon);
         cachedMarkers.add(atl);
 
-        Marker home = new Marker("ATL CIRCLE", 39.931269, -75.051231, 0, Color.YELLOW, "test");
+        Marker home = new Marker("ATL CIRCLE", 39.931269, -75.051231, 0, Color.YELLOW);
         cachedMarkers.add(home);
 
         /*

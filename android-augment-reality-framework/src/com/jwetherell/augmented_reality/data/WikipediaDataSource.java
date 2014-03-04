@@ -79,7 +79,7 @@ public class WikipediaDataSource extends NetworkDataSource {
         Marker ma = null;
         if (jo.has("title") && jo.has("lat") && jo.has("lng") && jo.has("elevation")) {
             try {
-                ma = new IconMarker(jo.getString("title"), jo.getDouble("lat"), jo.getDouble("lng"), jo.getDouble("elevation"), Color.WHITE, icon,"building");
+                ma = new IconMarker(jo.getString("title"), jo.getDouble("lat"), jo.getDouble("lng"), jo.getDouble("elevation"), Color.WHITE, icon);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
